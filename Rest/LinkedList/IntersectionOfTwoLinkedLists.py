@@ -35,7 +35,7 @@ class Solution(object):
             for _ in range(diff):
                 listB = listB.next
 
-        # Traverse both lists together until we find the intersection
+        # Traverse both lists together until we find the intersection.
         while listA is not None and listB is not None:
             if listA == listB:
                 return listA  # Intersection found
