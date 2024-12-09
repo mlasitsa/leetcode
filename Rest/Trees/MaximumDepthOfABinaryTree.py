@@ -15,7 +15,7 @@ class Solution:
 
         '''
         Easier to understand code below: 
-        
+
         def helper(node):
             if not node:
                 return 0
@@ -25,4 +25,4 @@ class Solution:
 
             return max(left, right) + 1
         return helper(root)
-        '''
+        '''    
