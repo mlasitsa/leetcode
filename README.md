@@ -20,6 +20,16 @@ In the near future, I plan to launch a **YouTube channel** where I’ll walk thr
 
 I’ve noticed that for myself, understanding the deeper mechanics of algorithms and data structures often required more than just watching quick solutions. By combining explanations, visual aids, and code walkthroughs, I aim to fill this gap and help others like me who need that extra clarity.
 
+### Video Explanations
+
+I am planning on making some video explanations! Here's a first one: [Check out the video](https://youtu.be/MIUsPjH3jUI?si=IksUU-x0hif0cWBi). Let me know if I go into enough detail and feel free to provide feedback or suggestions for improvement.
+
+<div align="center">
+  <a href="https://youtu.be/MIUsPjH3jUI?si=IksUU-x0hif0cWBi">
+    <img src="https://img.youtube.com/vi/MIUsPjH3jUI/0.jpg" alt="YouTube Video" width="600" />
+  </a>
+</div>
+
 ## Contributions
 
 If you want to contribute, reach out to me over [LinkedIn](https://www.linkedin.com/in/maxlasitsa/), and maybe we can build something together!
