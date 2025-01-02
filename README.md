@@ -1,6 +1,6 @@
 # LeetCode Solutions by Max Lasitsa
 
-Welcome to my **LeetCode** repository! Here, you'll find my solutions to various LeetCode problems. I aim to constantly improve and upload more solutions over time, so stay tuned for more content.
+Welcome to my **LeetCode** repository! Here, you'll find my solutions to various LeetCode problems. I aim to constantly improve and upload more solutions over time, so stay tuned for more content!
 
 ## 🚧 More Problems Coming Soon 🚧
 
