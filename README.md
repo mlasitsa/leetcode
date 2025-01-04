@@ -1,10 +1,10 @@
-# LeetCode Solutions by Max Lasitsa
+# LeetCode Solutions by Max Lasitsa 
 
 Welcome to my **LeetCode** repository! Here, you'll find my solutions to various LeetCode problems. I aim to constantly improve and upload more solutions over time, so stay tuned for more content!
 
 ## 🚧 More Problems Coming Soon 🚧
 
-While I’ve already uploaded several solutions, there are many more on the way. I’m working through them gradually and refining my approach as I go.
+While I’ve already uploaded several solutions, there are many more on the way. I’m working through them gradually and refining my approach as I go!
 
 ## My Mission
 
