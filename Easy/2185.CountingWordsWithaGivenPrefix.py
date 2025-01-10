@@ -22,7 +22,7 @@ class Solution:
         3. If the word starts with `pref`, increment `count`.
         4. Return `count` as the result.
 
-        I - Implement:
+        I -Implement:
         """
         count = 0
         for word in words:
