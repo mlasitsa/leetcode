@@ -14,7 +14,7 @@ One such great resource is **NeetCode**, but I found that even then, I sometimes
 
 ## Future Plans
 
-In the near future, I plan to launch a **YouTube channel** where I’ll walk through every LeetCode problem in **detailed depth**. I believe this is what a lot of people are missing – real, step-by-step breakdowns of the solutions and why certain choices are made in the code.
+In the near future I plan to launch a **YouTube channel** where I’ll walk through every LeetCode problem in **detailed depth**. I believe this is what a lot of people are missing – real, step-by-step breakdowns of the solutions and why certain choices are made in the code.
 
 ### Why This Matters
 
