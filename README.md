@@ -10,7 +10,7 @@ While I’ve already uploaded several solutions, there are many more on the way.
 
 I’m not a super expert (yet 😉), but I’ve found that while there are some excellent resources out there, many of them don’t go into the kind of in-depth explanations that can really help someone grasp the "why" behind the code.
 
-One such great resource is **NeetCode**, but I found that even then, I sometimes needed to go deeper to understand the full picture. For me, print statements and AI tools played a huge role in reaching that deeper understanding.
+One such great resource is **NeetCode**, but I found that even then, I sometimes needed to go deeper to understand the full picture. For me, print statements and AI tools played a huge role in reaching that deeper understanding!
 
 ## Future Plans
 
