@@ -32,4 +32,4 @@ I am planning on making some video explanations! Here's a first one: [Check out 
 
 ## Contributions
 
-If you want to contribute, reach out to me over [LinkedIn](https://www.linkedin.com/in/maxlasitsa/), and maybe we can build something together!
+If you want to contribute,  reach out to me over [LinkedIn](https://www.linkedin.com/in/maxlasitsa/), and maybe we can build something together!
