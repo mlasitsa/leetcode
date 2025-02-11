@@ -152,3 +152,78 @@ Time Complexity:
 - **O(m * n)**: We process every cell once in BFS.
 - **O(m * n) Space** for the queue (in worst case when all are fresh).
 '''
+
+
+
+'''
+Alternartive approach - split into several functions
+
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        # bfs
+        # keep track of minutes
+        # count rotten (queue) and fresh (counter)
+
+        rotten = deque()
+        fresh = 0  # Count of fresh oranges
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    fresh += 1
+                elif grid[i][j] == 2:
+                    rotten.append((i, j))
+
+        # If there are no fresh oranges, return 0 (no time needed)
+        if fresh == 0:
+            return 0
+
+        def bfsToFindAmountOfTime(q):
+            time = 0
+            seen = set()
+
+            while q:
+                found_new_rotten = False  # This flag resets per BFS level
+                
+                # Process all oranges at the current BFS level
+                for _ in range(len(q)):
+                    i, j = q.popleft()
+
+                    if checkRotten(i + 1, j, seen, q): 
+                        found_new_rotten = True
+                    if checkRotten(i, j + 1, seen, q):
+                        found_new_rotten = True
+                    if checkRotten(i - 1, j, seen, q):
+                        found_new_rotten = True
+                    if checkRotten(i, j - 1, seen, q):
+                        found_new_rotten = True
+
+                # Only increment the time if we rotted any new oranges in this level
+                if found_new_rotten:
+                    time += 1
+    
+            return time      
+
+        def checkRotten(r, c, seen, q):
+            nonlocal fresh  # Track how many fresh oranges are left
+            
+            # Ensure the position is valid and not already processed
+            if (r, c) in seen or r < 0 or r >= len(grid) or c < 0 or c >= len(grid[0]) or grid[r][c] != 1:
+                return False
+            else:
+                grid[r][c] = 2  # Mark as rotten
+                q.append((r, c))  # Add to the queue for the next BFS level
+                seen.add((r, c))
+                fresh -= 1  # Reduce the count of fresh oranges
+                return True
+
+        # Perform BFS to rot all the oranges
+        time_taken = bfsToFindAmountOfTime(rotten)
+
+        # If there are still fresh oranges left, return -1 (not all could be rotted)
+        if fresh > 0:
+            return -1
+        else:
+            return time_taken
+
+'''
