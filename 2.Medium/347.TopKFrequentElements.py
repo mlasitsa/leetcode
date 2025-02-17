@@ -79,3 +79,68 @@ Time Complexity:
 Space Complexity:
 - O(n): Space for the hashmap and bucket array.
 """
+
+
+# Alternative solution using heap:
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        '''
+        U - Understand:
+        - Problem: Given a list of integers `nums`, find the **K most frequent** elements.
+        - Return the elements in **any order**.
+        - Constraints:
+          1. `1 <= nums.length <= 10^5`
+          2. `k` is **always valid** (`1 <= k <= unique elements in nums`).
+          3. The output **does not need to be sorted**.
+
+        Examples:
+        ```
+        Input: nums = [1,1,1,2,2,3], k = 2
+        Output: [1,2]
+
+        Input: nums = [1], k = 1
+        Output: [1]
+        ```
+
+        Edge Cases:
+        1. **All elements unique:** `[1,2,3,4]` with `k=2` should return `[3,4]` (or any top 2).
+        2. **All elements the same:** `[2,2,2,2]`, `k=1` should return `[2]`.
+        3. **Large `k` values:** Ensure `k` is not greater than unique elements in `nums`.
+
+        M - Match:
+        - **HashMap + Heap (Priority Queue)**
+          1. Use **HashMap** (`dict`) to count occurrences.
+          2. Use **Min-Heap (Priority Queue)** to keep track of top `k` elements efficiently.
+
+        P - Plan:
+        1. **Build a frequency map (`hmap`)** to store `{num: frequency}`.
+        2. **Use a Min-Heap (`heapq`)**:
+           - Insert `(-frequency, num)` to create a **Max-Heap** using negative values.
+           - Extract the **top `k` elements**.
+        3. **Return the extracted elements as the final result**.
+
+        I - Implement:
+        '''
+        hmap = {}
+
+        for num in nums:
+            if num in hmap:
+                hmap[num] += 1
+            else:
+                hmap[num] = 1
+
+        heap = []
+
+        for key, v in hmap.items():
+            heapq.heappush(heap, (-v, key))  # Use negative frequency for max heap
+
+        final = []
+
+        while len(final) < k:
+            count, item = heapq.heappop(heap)
+            final.append(item)
+        
+        return final
+    
+
+    
