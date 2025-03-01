@@ -24,7 +24,7 @@ class Solution:
         """
         M - Match with Patterns
         Observations:
-        - The array is **sorted**, which suggests **binary search**.
+        - The array is **sorted**, which suggests **binary search**
         - Binary search is an efficient way to search in a sorted array (O(log N) time complexity).
         - The problem does not require modification of `nums`, so an iterative or recursive binary search will work.
 
