@@ -4,7 +4,7 @@ class Solution:
         U - Understand the Problem
         Problem Statement:
         - Given a sorted array `nums` and a `target` value, return the index of `target` if it exists in `nums`.
-        - If `target` is not in `nums`, return -1.
+        - If `target` is not in `nums`, return -1
         
         Clarifications/Constraints:
         - The array `nums` is sorted in ascending order.
