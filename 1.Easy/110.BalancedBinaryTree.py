@@ -66,7 +66,7 @@ class Solution:
             - If height difference > 1, return `-1` (unbalanced).
             - Otherwise, return `max(left, right) + 1`.
         2. Call `checkHeight(root)` and check if it returns `-1` (unbalanced).
-        3. Return True if the tree is balanced, otherwise return False.
+        3. Return True if the tree is balanced, otherwise return False
         """
 
         # I - Implement
