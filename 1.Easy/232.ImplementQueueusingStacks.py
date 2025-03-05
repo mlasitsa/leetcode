@@ -17,7 +17,7 @@ class MyQueue:
     Constraints:
     - Only standard stack operations (push, pop, top/peek, empty) can be used.
     - We must maintain FIFO (First-In-First-Out) behavior using LIFO (Last-In-First-Out) stacks.
-    - The operations should be efficient.
+    - The operations should be efficient
 
     Examples:
     Input:
