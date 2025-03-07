@@ -68,5 +68,5 @@ class Solution:
           ✅ Only one element in `nums` → Should return that element.
           ✅ All elements are identical → Should return that element.
           ✅ Large `nums` input → Should run efficiently in O(N).
-          ✅ Negative numbers in `nums` → Works correctly.
+          ✅ Negative numbers in `nums` → Works correctly
         """
