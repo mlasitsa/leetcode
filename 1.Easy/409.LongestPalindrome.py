@@ -16,7 +16,7 @@ class Solution:
         Example 1:
         Input: "abccccdd"
         Output: 7
-        Explanation: The longest palindrome is "dccaccd".
+        Explanation: The longest palindrome is "dccaccd"
 
         Example 2:
         Input: "a"
