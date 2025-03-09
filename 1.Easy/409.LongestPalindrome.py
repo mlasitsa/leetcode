@@ -10,7 +10,7 @@ class Solution:
         Clarifications:
         - Characters with even counts can **always** be used in full.
         - Characters with odd counts contribute `(count - 1)`, except for **one odd character**, which can go in the middle.
-        - The result must be an **integer** (not the actual palindrome).
+        - The result must be an **integer** (not the actual palindrome)
 
         Example Walkthrough:
         Example 1:
