@@ -1,115 +1,96 @@
-class Solution(object):
-    def threeSum(self, nums):
+from typing import List
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
         """
         U - Understand the Problem
         Problem Statement:
-        - Given an integer array `nums`, find all unique triplets `[nums[i], nums[j], nums[k]]` such that:
-          1. `i != j != k`
-          2. `nums[i] + nums[j] + nums[k] == 0`.
-        - The solution set must not contain duplicate triplets.
+        - Given an array `nums`, find **all unique triplets** (i, j, k) such that:
+          - nums[i] + nums[j] + nums[k] = 0.
+          - i, j, and k are distinct indices.
+          - The solution set must not contain duplicate triplets.
 
-        Clarifications/Constraints:
-        - The input array can have both positive and negative integers, including zero.
-        - The result should only include unique triplets.
-        - The array size can be large, so efficiency is important.
+        Clarifications:
+        - Can numbers be negative? → Yes.
+        - Can we use the same element more than once? → No, indices must be distinct.
+        - Should the triplets be in sorted order? → No, but output must be unique.
+        - Can `nums` contain duplicate values? → Yes.
+        - What if there are no triplets? → Return an empty list.
 
-        Examples:
+        Example Walkthrough:
+        Example 1:
         Input: nums = [-1, 0, 1, 2, -1, -4]
         Output: [[-1, -1, 2], [-1, 0, 1]]
-        Explanation:
-        - The triplets [-1, -1, 2] and [-1, 0, 1] sum to zero. Duplicate triplets are not allowed.
+        Explanation: 
+        - Two triplets sum to zero: [-1, -1, 2] and [-1, 0, 1].
 
-        Input: nums = []
+        Example 2:
+        Input: nums = [0, 1, 1]
         Output: []
+        Explanation: No three numbers sum to zero.
 
-        Input: nums = [0]
-        Output: []
-
-        Potential clarifying questions for an interview:
-        1. Can the input array contain duplicates? (Yes.)
-        2. Should the result include only unique triplets? (Yes.)
-        3. Can the input array be empty or contain a single element? (Yes, return an empty list in such cases.)
+        Example 3:
+        Input: nums = [0, 0, 0]
+        Output: [[0, 0, 0]]
+        Explanation: Only one valid triplet.
         """
 
         # M - Match with Patterns
-        # Pattern Identified:
-        # - Sort the array to enable efficient duplicate elimination and two-pointer traversal.
-        # - Use a loop to fix the first element of the triplet.
-        # - Use two pointers to find pairs that sum to the negative of the fixed element.
-
         """
-        P - Plan
-        1. Sort the array to simplify duplicate handling and two-pointer traversal.
-        2. Iterate through the array:
-           - Skip duplicates for the fixed element.
-           - Use two pointers (`left` and `right`) to find pairs that sum to the negative of the fixed element.
-           - Append the triplet to the result if a match is found.
-           - Skip duplicates for the `left` and `right` pointers.
-        3. Return the result list containing all unique triplets.
+        - Sorting + Two Pointers pattern works best here:
+          - Sorting helps avoid duplicates.
+          - Two-pointer approach efficiently finds valid triplets.
+        - We avoid **O(N^3) brute force** by reducing complexity to **O(N^2)**.
         """
 
-        nums.sort()  # Step 1: Sort the array
-        answer = []  # To store the result triplets
+        # P - Plan
+        """
+        1. Sort `nums` → Helps with duplicate elimination.
+        2. Iterate over `nums` using `left` pointer.
+           - Skip duplicates to avoid duplicate triplets.
+        3. Use two pointers:
+           - `mid` starts from `left + 1`, `right` starts from the end.
+           - Calculate `sum = nums[left] + nums[mid] + nums[right]`.
+           - If sum < 0 → Move `mid` forward (increase sum).
+           - If sum > 0 → Move `right` backward (decrease sum).
+           - If sum == 0 → Store triplet and update both `mid` and `right` (avoid duplicates).
+        4. Convert set to list and return.
+        """
 
-        for i in range(len(nums)):
-            # Step 2: Skip duplicates for the fixed element
-            if nums[i] > 0:  # No need to continue if the fixed element is greater than 0
-                break
-            if i > 0 and nums[i] == nums[i - 1]:  # Skip duplicates
-                continue
+        final = set()
+        nums.sort()  # Step 1: Sort input
 
-            left = i + 1  # Pointer to the next element
-            right = len(nums) - 1  # Pointer to the last element
+        for left in range(len(nums) - 2):  # Step 2: Iterate over `left`
+            mid, right = left + 1, len(nums) - 1  # Step 3: Two pointers
 
-            # Step 3: Two-pointer approach to find valid triplets
-            while left < right:
-                summ = nums[i] + nums[left] + nums[right]
-                if summ == 0:
-                    # Found a triplet
-                    answer.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
+            while mid < right:  # Step 3: Find valid triplets
+                summ = nums[left] + nums[mid] + nums[right]
 
-                    # Skip duplicates for `left` and `right`
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
+                if summ < 0:
+                    mid += 1  # Increase sum
                 elif summ > 0:
-                    # If the sum is too large, move `right` left
-                    right -= 1
+                    right -= 1  # Decrease sum
                 else:
-                    # If the sum is too small, move `left` right
-                    left += 1
+                    final.add((nums[left], nums[mid], nums[right]))  # Store triplet
+                    mid += 1
+                    right -= 1
 
-        return answer
+        return list(final)  # Step 4: Convert set to list
 
-# Example Usage
-sol = Solution()
+        """
+        I - Implement
+        - The code sorts `nums`, then uses a **two-pointer** approach to efficiently find triplets.
 
-"""
-E - Evaluate
-Test the solution with examples:
-1. Input: nums = [-1, 0, 1, 2, -1, -4] -> Output: [[-1, -1, 2], [-1, 0, 1]]
-2. Input: nums = [] -> Output: []
-3. Input: nums = [0] -> Output: []
+        R - Review
+        - Time Complexity: **O(N^2)**
+          - Sorting takes **O(N log N)**.
+          - Two-pointer search runs in **O(N)** for each element → **O(N^2)** overall.
+        - Space Complexity: **O(N)** (for storing results in a set).
 
-Edge Cases:
-1. Empty array -> Output: []
-2. Single element or two elements -> Output: []
-3. Large array with many duplicates -> Ensure duplicates are handled properly.
-
-Time Complexity:
-- O(n^2): The outer loop runs O(n) times, and the two-pointer approach runs O(n) in the worst case.
-
-Space Complexity:
-- O(1): The result list is the only additional space used, and it scales with the output size.
-"""
-
-res = sol.threeSum([-1, 0, 1, 2, -1, -4])
-expected = [[-1, -1, 2], [-1, 0, 1]]
-
-if res == expected:
-    print("Good Job")
-else:
-    print("Try Again...")
+        E - Evaluate
+        Edge Cases:
+        ✅ No valid triplet → `nums = [1, 2, 3]` → Output: `[]`
+        ✅ All numbers are zero → `nums = [0, 0, 0, 0]` → Output: `[[0,0,0]]`
+        ✅ Already sorted input → `nums = [-4, -1, -1, 0, 1, 2]` → Output: `[[-1, -1, 2], [-1, 0, 1]]`
+        ✅ Large input case → Ensure efficiency holds for `nums` with 10⁵ elements.
+        """
