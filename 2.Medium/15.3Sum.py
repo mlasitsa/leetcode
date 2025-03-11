@@ -22,7 +22,7 @@ class Solution:
         Input: nums = [-1, 0, 1, 2, -1, -4]
         Output: [[-1, -1, 2], [-1, 0, 1]]
         Explanation: 
-        - Two triplets sum to zero: [-1, -1, 2] and [-1, 0, 1].
+        - Two triplets sum to zero: [-1, -1, 2] and [-1, 0, 1]
 
         Example 2:
         Input: nums = [0, 1, 1]
