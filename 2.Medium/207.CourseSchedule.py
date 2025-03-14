@@ -30,7 +30,7 @@ class Solution:
 
         # Step 2: Create two sets for tracking visited and currently visiting nodes
         visited = set()    # Fully processed nodes
-        visiting = set()   # Nodes currently being visited - cycle detection
+        visiting = set()   # Nodes currently being visited (cycle detection)
 
         # Step 3: Perform DFS Cycle Detection
         def dfs(node):
