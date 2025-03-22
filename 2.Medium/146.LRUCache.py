@@ -150,3 +150,147 @@ Alternative Approach:
 - **Using `OrderedDict` from `collections` (Python built-in LRU)**
 - `OrderedDict` maintains order and provides **O(1)** operations.
 '''
+
+
+
+
+# MORE EFFICIENT VERSION OF CODE 
+
+# ========================================
+# U - Understand the Problem
+# ========================================
+# Problem Statement:
+# Implement a Least Recently Used (LRU) Cache with the following operations in O(1) time:
+# - get(key): Return the value if the key exists, otherwise return -1.
+# - put(key, value): Insert or update the value. If the cache exceeds capacity, evict the least recently used item.
+
+# Constraints:
+# - The cache should always maintain the "most recently used" (MRU) at one end and "least recently used" (LRU) at the other.
+# - You should implement the data structure yourself (not use Python's OrderedDict or similar).
+
+# Clarifying Questions:
+# - Can keys or values be negative? (Yes, we assume any integers are valid.)
+# - What happens when multiple gets happen on the same key? (It should be moved to MRU end.)
+# - If a key is updated, is it considered recently used? (Yes.)
+
+# Example:
+# cache = LRUCache(2)
+# cache.put(1, 1)  # cache = {1=1}
+# cache.put(2, 2)  # cache = {1=1, 2=2}
+# cache.get(1)     # returns 1, cache = {2=2, 1=1}
+# cache.put(3, 3)  # evicts key 2, cache = {1=1, 3=3}
+# cache.get(2)     # returns -1 (not found)
+# cache.put(4, 4)  # evicts key 1, cache = {3=3, 4=4}
+# cache.get(1)     # returns -1
+# cache.get(3)     # returns 3
+# cache.get(4)     # returns 4
+
+# ========================================
+# M - Match with Patterns
+# ========================================
+# Pattern: HashMap + Doubly Linked List
+# - HashMap provides O(1) access to cache nodes by key.
+# - Doubly Linked List allows O(1) addition and deletion of nodes (for tracking LRU/MRU order).
+# - Dummy head/tail nodes simplify pointer logic for edge cases.
+
+# ========================================
+# P - Plan
+# ========================================
+# Classes:
+# 1. Node: Stores key, value, and pointers to previous and next nodes.
+# 2. DoubleLinkedList: Manages dummy head and tail, and supports add/delete operations.
+# 3. LRUCache:
+#    - get(key): If key exists, move node to front (MRU) and return its value.
+#    - put(key, value): 
+#        - If key exists, update value, move node to MRU.
+#        - If key doesn't exist:
+#            - If at capacity: evict LRU node from back.
+#            - Add new node to front and update hashmap.
+
+# ========================================
+# I - Implement
+# ========================================
+class Node:
+    def __init__(self, key, val, prev=None, nexT=None):
+        self.key = key
+        self.val = val
+        self.prev = prev
+        self.nexT = nexT
+
+
+class DoubleLinkedList:
+    def __init__(self):
+        self.start = Node(None, None)  # Dummy start (MRU side)
+        self.end = Node(None, None)    # Dummy end (LRU side)
+        self.end.nexT = self.start
+        self.start.prev = self.end
+
+    def add(self, node):
+        # Add new node to front (before dummy start)
+        prevNode = self.start.prev
+        node.prev = prevNode
+        node.nexT = self.start
+        prevNode.nexT = node
+        self.start.prev = node
+
+    def delete(self, node):
+        # Remove node from list
+        prevNode = node.prev
+        nextNode = node.nexT
+        prevNode.nexT = nextNode
+        nextNode.prev = prevNode
+
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.storage = {}  # Key -> Node
+        self.doubleList = DoubleLinkedList()
+
+    def get(self, key) -> int:
+        if key in self.storage:
+            node = self.storage[key]
+            self.doubleList.delete(node)
+            self.doubleList.add(node)  # Move to front
+            return node.val
+        else:
+            return -1
+
+    def put(self, key, value) -> None:
+        if key in self.storage:
+            node = self.storage[key]
+            node.val = value
+            self.doubleList.delete(node)
+            self.doubleList.add(node)  # Refresh MRU status
+        else:
+            if len(self.storage) == self.capacity:
+                lru_node = self.doubleList.end.nexT  # Least recently used node
+                if lru_node.key is not None:
+                    self.doubleList.delete(lru_node)
+                    del self.storage[lru_node.key]
+            newNode = Node(key, value)
+            self.doubleList.add(newNode)
+            self.storage[key] = newNode
+
+# ========================================
+# R - Review
+# ========================================
+# - get(key) and put(key, value) both run in O(1) time.
+# - The linked list guarantees fast removal and insertion of nodes.
+# - HashMap provides constant lookup for keys.
+
+# ========================================
+# E - Evaluate
+# ========================================
+# Time Complexity:
+# - get, put: O(1) each
+
+# Space Complexity:
+# - O(N) for HashMap
+# - O(N) for linked list nodes
+# - Total: O(N), where N = capacity
+
+# Edge Cases:
+# - Capacity = 0 (all puts will evict immediately)
+# - Repeated puts on the same key (should just update and refresh position)
+# - get on non-existent key returns -1
