@@ -1,106 +1,110 @@
 class Solution:
-    def rob(self, nums: List[int]) -> int:
-        """
-        U - Understand the Problem
-        Problem Statement:
-        - A thief is deciding which houses to rob along a street.
-        - Each house has a certain amount of money stashed.
-        - The thief cannot rob two adjacent houses (to avoid alerting the police).
-        - Determine the maximum amount of money the thief can rob without robbing two consecutive houses.
+    """
+    U - Understand the Problem
+    ------------------------------------
+    Problem Statement:
+    - You are a professional robber planning to rob houses along a street.
+    - Each house has some amount of money stashed, the only constraint is:
+      you cannot rob two adjacent houses.
+    - Return the maximum amount of money you can rob without alerting the police.
 
-        Examples:
-        Input: nums = [1,2,3,1]
-        Output: 4
-        Explanation:
-        - Rob house 1 (money = 1) and house 3 (money = 3).
-        - Total money = 1 + 3 = 4.
+    Examples:
+    - Input: nums = [1,2,3,1] -> Output: 4 (rob 1 and 3)
+    - Input: nums = [2,7,9,3,1] -> Output: 12 (rob 2, 9, 1)
 
-        Input: nums = [2,7,9,3,1]
-        Output: 12
-        Explanation:
-        - Rob house 1 (money = 2), house 3 (money = 9), and house 5 (money = 1).
-        - Total money = 2 + 9 + 1 = 12.
+    Edge Cases:
+    - Empty list → 0
+    - One house → nums[0]
+    - Two houses → max(nums[0], nums[1])
+    """
 
-        Clarifications/Constraints:
-        1. Can `nums` be empty? (Yes, return 0 in that case.)
-        2. What if there’s only one house? (Return the value of that house.)
-        3. Will there always be at least one house? (Yes, per constraints.)
-        4. Negative values? (No, all values are non-negative.)
+    """
+    M - Match
+    ------------------------------------
+    This is a classic **Dynamic Programming** problem:
+    - Recurrence: At index `i`, you can choose to:
+      1. Rob the house (nums[i] + dp[i+2])
+      2. Skip the house (dp[i+1])
+    - Base cases and transitions match well with DP.
+    """
 
-        Constraints:
-        - 1 <= len(nums) <= 10^4
-        - 0 <= nums[i] <= 10^4
-        """
+    # Pure Recursion (Exponential)
+    def rob_recursive(self, nums):
+        def helper(i):
+            if i >= len(nums):
+                return 0
+            return max(nums[i] + helper(i + 2), helper(i + 1))
+        return helper(0)
 
-        """
-        M - Match with Patterns
-        Pattern Identified:
-        - This is a classic **Dynamic Programming (DP)** problem.
-        - At each house `i`, the thief has two options:
-          1. Skip the house: Total money is the same as `dp[i-1]`.
-          2. Rob the house: Total money is `nums[i] + dp[i-2]`.
-        - Use a DP array to store the maximum money the thief can rob up to each house.
-        """
+    # Memoization (Top-down DP) - O(n) time, O(n) space
+    def rob_memo(self, nums):
+        memo = [-1] * len(nums)
+        def helper(i):
+            if i >= len(nums):
+                return 0
+            if memo[i] != -1:
+                return memo[i]
+            memo[i] = max(nums[i] + helper(i + 2), helper(i + 1))
+            return memo[i]
+        return helper(0)
 
-        """
-        P - Plan
-        1. Handle edge cases:
-           - If `nums` is empty, return 0.
-           - If `nums` has only one house, return `nums[0]`.
-        2. Initialize a DP array:
-           - `dp[i]` represents the maximum money the thief can rob up to house `i`.
-           - `dp[0] = nums[0]`: Rob the first house.
-           - `dp[1] = max(nums[0], nums[1])`: Rob the house with more money.
-        3. Iterate through the remaining houses:
-           - For each house `i`, calculate:
-             `dp[i] = max(dp[i-1], dp[i-2] + nums[i])`.
-           - This chooses the maximum between robbing house `i` and skipping it.
-        4. Return `dp[-1]`: The maximum money that can be robbed.
-        """
-
-        # Edge case: if nums is empty
-        if len(nums) == 0:
+    # Tabulation (Bottom-up DP) - O(n) time, O(n) space
+    def rob_tabulation(self, nums):
+        if not nums:
             return 0
-
-        # Edge case: if nums has only one house
         if len(nums) == 1:
             return nums[0]
-
-        # Step 2: Initialize DP array
-        dp = [0] * (len(nums))
+        dp = [0] * len(nums)
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
-
-        # Step 3: Iterate through remaining houses
         for i in range(2, len(nums)):
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-
-        # Step 4: Return the maximum amount robbed
+            dp[i] = max(nums[i] + dp[i - 2], dp[i - 1])
         return dp[-1]
 
-# Example Usage:
-"""
-E - Evaluate
-Test the solution with examples:
-1. Input: nums = [1, 2, 3, 1]
-   Output: 4
-   Explanation:
-   - Rob house 1 (money = 1) and house 3 (money = 3).
-   - Total money = 1 + 3 = 4.
+    # Space-Optimized DP - O(n) time, O(1) space
+    def rob_optimized(self, nums):
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        prev = nums[0]
+        cur = max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            temp = max(nums[i] + prev, cur)
+            prev = cur
+            cur = temp
+        return cur
 
-2. Input: nums = [2, 7, 9, 3, 1]
-   Output: 12
-   Explanation:
-   - Rob house 1 (money = 2), house 3 (money = 9), and house 5 (money = 1).
-   - Total money = 2 + 9 + 1 = 12.
+    """
+    P - Plan
+    ------------------------------------
+    Use dynamic programming to store max loot up to each house:
+    - Base Cases:
+      dp[0] = nums[0]
+      dp[1] = max(nums[0], nums[1])
+    - Transition:
+      dp[i] = max(nums[i] + dp[i-2], dp[i-1])
 
-Time Complexity:
-- Iterating through the houses: O(n).
-- Total: O(n).
+    I - Implement: (Above)
 
-Space Complexity:
-- Storing the DP array: O(n).
+    R - Review
+    ------------------------------------
+    - Pure recursion = exponential, bad for large inputs
+    - Memoization avoids recomputation
+    - Tabulation iteratively builds solution
+    - Optimized DP saves space by storing only last two values
 
-Can we optimize? (Yes, by using only two variables to store the previous states.)
-YOU CAN TRY YOURSELF :)
-"""
+    E - Evaluate
+    ------------------------------------
+    Time Complexity:
+    - Recursion: O(2^n)
+    - Memoization: O(n)
+    - Tabulation: O(n)
+    - Optimized DP: O(n)
+
+    Space Complexity:
+    - Recursion: O(n) stack
+    - Memoization: O(n)
+    - Tabulation: O(n)
+    - Optimized DP: O(1)
+    """
