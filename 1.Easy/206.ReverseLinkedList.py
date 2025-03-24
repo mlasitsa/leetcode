@@ -9,7 +9,7 @@ class Solution:
         """
         U - Understand the Problem
         Problem Statement:
-        - Given the head of a singly linked list, reverse the list, and return the new head.
+        - Given the head of a singly linked list, reverse the list, and return the new head
 
         Clarifications/Constraints:
         - The input is a singly linked list (each node has a `val` and `next` pointer).
