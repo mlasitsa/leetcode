@@ -65,5 +65,5 @@ class Solution:
         ------------------
         Time Complexity: O(n * 5) → O(n)
         Space Complexity: O(n * 5) → O(n)
-        - Optimizable to O(1) space with 1D array since we only use previous row and column.
+        - Optimizable to O(1) space with 1D array since we only use previous row and column
         """
