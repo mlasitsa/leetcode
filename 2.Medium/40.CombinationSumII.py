@@ -12,7 +12,7 @@ class Solution:
 
         Clarifications:
         - Output must not contain duplicate combinations.
-        - Elements can repeat in the input, but must not repeat in result if used already.
+        - Elements can repeat in the input, but must not repeat in result if used already
         - Order of output combinations doesn't matter.
         
         Examples:
