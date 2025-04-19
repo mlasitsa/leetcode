@@ -35,7 +35,7 @@ class Solution:
 
         def backtrack(r):
             if r == n:
-                # ✅ Found a valid board setup, convert to list of strings and save
+                # Found a valid board setup, convert to list of strings and save
                 copy = ["".join(row) for row in board]
                 res.append(copy)
                 return
