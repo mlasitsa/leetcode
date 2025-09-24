@@ -114,3 +114,56 @@ class Solution:
         Optimizations:
         - Use **in-place modification** to reduce extra memory usage.
         """
+
+
+
+'''
+BFS BUT WITH TIME LIMIT EXCEED:
+'''
+
+from collections import deque
+from typing import List
+
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+
+        '''
+        so I guess I can do bfs probably since I need to check all 4 directions
+        I dont really need to go over 0 sinze they are zero
+        I can modify matrix in place? 
+        '''
+        def bfsBaseCase(row, col, matrix, seen, q):
+            if 0 <= row < len(matrix) and 0 <= col < len(matrix[0]) and (row, col) not in seen:
+                if matrix[row][col] == 0:
+                    return True 
+                seen.add((row, col))
+                q.append((row, col))
+            return False
+
+        def bfs(row, col):
+            q = deque([(row, col)])
+            seen = {(row, col)}
+            level = 0
+
+            while q:
+                for _ in range(len(q)):
+                    r, c = q.popleft()
+
+                    if bfsBaseCase(r + 1, c, mat, seen, q): 
+                        return level + 1
+                    if bfsBaseCase(r - 1, c, mat, seen, q):
+                        return level + 1
+                    if bfsBaseCase(r, c + 1, mat, seen, q):
+                        return level + 1
+                    if bfsBaseCase(r, c - 1, mat, seen, q):
+                        return level + 1
+
+                level += 1
+            return level
+
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if mat[i][j] != 0:
+                    mat[i][j] = bfs(i, j)
+
+        return mat
