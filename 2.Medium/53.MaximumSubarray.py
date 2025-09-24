@@ -87,3 +87,17 @@ class Solution:
         - Instead of using `dp[]`, we can use two **variables** (`maxSum` and `currentSum`) for **O(1) space**.
         """
 
+
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        '''
+          Weird way but also works, I tired ignoring DP for some reason lol
+          stall passed though
+        '''
+        summ = nums[0]
+        maxSumm = nums[0]
+        for i in range(len(nums)):
+            summ = max(nums[i], summ + nums[i])
+            maxSumm = max(maxSumm, summ)
+        return maxSumm
